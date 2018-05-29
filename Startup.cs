@@ -38,6 +38,7 @@ namespace Bolt
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IMenuItemService, MenuItemService>();
+            services.AddTransient<ICouponService, CouponService>();
 
             services.AddMvc();
         }

@@ -116,13 +116,17 @@ namespace Bolt.Logic.Services
 
                 var extension_new = files[0].FileName.Substring(files[0].FileName.LastIndexOf("."),
                     files[0].FileName.Length - files[0].FileName.LastIndexOf("."));
-
-                var extension_old = mI.Image.Substring(mI.Image.LastIndexOf("."),
-                    mI.Image.Length - mI.Image.LastIndexOf("."));
-
-                if (System.IO.File.Exists(Path.Combine(uploads, model.MenuItem.Id + extension_old)))
+                string extension_old;
+                if (mI.Image != null)
                 {
-                    System.IO.File.Delete(Path.Combine(uploads, model.MenuItem.Id + extension_old));
+                    extension_old = mI.Image.Substring(mI.Image.LastIndexOf("."),
+                       mI.Image.Length - mI.Image.LastIndexOf("."));
+
+
+                    if (System.IO.File.Exists(Path.Combine(uploads, model.MenuItem.Id + extension_old)))
+                    {
+                        System.IO.File.Delete(Path.Combine(uploads, model.MenuItem.Id + extension_old));
+                    }
                 }
 
                 using (var fs = new FileStream(Path.Combine(uploads, model.MenuItem.Id + extension_new),
@@ -142,9 +146,30 @@ namespace Bolt.Logic.Services
             mI.Spicy = model.MenuItem.Spicy;
             mI.CategoryId = model.MenuItem.CategoryId;
             mI.SubCategoryId = model.MenuItem.SubCategoryId;
-           
+
             return await _db.SaveChangesAsync() > 0;
 
+        }
+
+        public async Task<bool> DeleteAsync(string root, MenuItem menuItem)
+        {
+            if (menuItem != null)
+            {
+                var uploads = Path.Combine(root, "image");
+                var extension = menuItem.Image.Substring(menuItem.Image.LastIndexOf("."),
+                    menuItem.Image.Length - menuItem.Image.LastIndexOf("."));
+
+                var imagePath = Path.Combine(root, menuItem.Id + extension);
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+
+                _db.MenuItem.Remove(menuItem);
+                return await _db.SaveChangesAsync() > 0;
+
+            }
+            return false;
         }
     }
 }

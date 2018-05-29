@@ -3,7 +3,6 @@ C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\bin\Debug\netcorea
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\bin\Debug\netcoreapp2.0\Bolt.runtimeconfig.dev.json
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\bin\Debug\netcoreapp2.0\Bolt.dll
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\bin\Debug\netcoreapp2.0\Bolt.pdb
-C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.csprojAssemblyReference.cache
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.csproj.CoreCompileInputs.cache
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.AssemblyInfoInputs.cache
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.AssemblyInfo.cs

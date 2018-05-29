@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Bolt.Models.Coupon>
+
+    @{
+    ViewData["Title"] = "Index";
+    }
+
+    <h2>Coupons</h2>
+
+    <p>
+        @Html.Partial("_CreateButtonPartial")
+    </p>
+
+    <div class="form-border">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Discount)
+                    </th>
+                    <th>
+                       @Html.DisplayNameFor(model=>model.MinimumAmout)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Discount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinimumAmout)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsActive)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" type="button" href="@Url.Action(" Edit/"+ item.Id)">
+                        <i class="far fa-edit"></i>
+                        </a>
+
+                        <a class="btn btn-danger" type="button" href="@Url.Action(" Delete/"+ item.Id)">
+                        <i class="fas fa-trash-alt"></i>
+                        </a>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+

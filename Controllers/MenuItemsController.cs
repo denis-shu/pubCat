@@ -117,10 +117,12 @@ namespace Bolt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(Guid id)
         {
+            MenuItemVm.MenuItem = await _service.GetFullMenuItem(id);
             MenuItemVm.MenuItem.SubCategoryId = new Guid(Request.Form["SubCategoryId"].ToString());
 
             if (id != MenuItemVm.MenuItem.Id)
                 return NotFound();
+
             if (ModelState.IsValid)
             {
                 try
@@ -155,6 +157,32 @@ namespace Bolt.Controllers
                 return NotFound();
 
             return View(MenuItemVm);
+        }
+
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == null)
+                return NotFound();
+
+            MenuItemVm.MenuItem = await _service.GetFullMenuItem(id);
+
+            if (MenuItemVm.MenuItem == null)
+                return NotFound();
+
+            return View(MenuItemVm);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            string root = _hostEnv.WebRootPath;
+            var mI = await _service.GetFullMenuItem(id);
+
+            var res = await _service.DeleteAsync(root, mI);
+
+            return RedirectToAction(nameof(Index));
+
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Bolt.Logic.Services
         Task<MenuItem> GetFullMenuItem(Guid id);
         Task<IEnumerable<SubCategory>> GetSubcategory(Guid id);
         Task<bool> EditAsync(IFormFileCollection files, string root, MenuItemViewModel model);
+        Task<bool> DeleteAsync(string root, MenuItem model);
 
 
     }
