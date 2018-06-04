@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Bolt.Models;
 using Bolt.Models.AccountViewModels;
 using Bolt.Services;
+using Bolt.Logic.Services;
+using Bolt.Utility;
 
 namespace Bolt.Controllers
 {
@@ -24,17 +26,23 @@ namespace Bolt.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly IRegisterService _regService;
+        private readonly RoleManager<IdentityRole> _roleManger;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IRegisterService regService,
+            RoleManager<IdentityRole> roleManger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _regService = regService;
+            _roleManger = roleManger;
         }
 
         [TempData]
@@ -61,7 +69,7 @@ namespace Bolt.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -220,10 +228,29 @@ namespace Bolt.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName
+                };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    if (!await _roleManger.RoleExistsAsync(SD.AdminAndUser))
+                    {
+                        await _roleManger.CreateAsync(new IdentityRole(SD.AdminAndUser));
+                    }
+
+                    if (!await _roleManger.RoleExistsAsync(SD.CustomerAndUser))
+                    {
+                        await _roleManger.CreateAsync(new IdentityRole(SD.CustomerAndUser));
+                    }
+
+                    await _userManager.AddToRoleAsync(user, SD.CustomerAndUser);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

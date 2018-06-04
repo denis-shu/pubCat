@@ -19,7 +19,7 @@ namespace Bolt.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var indexVM = _service.GetIndexViewModel();
+            var indexVM = await _service.GetIndexViewModel();
 
             return View(indexVM);
         }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Bolt.Models;
 using Bolt.Models.ManageViewModels;
 using Bolt.Services;
+using Bolt.Logic.Services;
 
 namespace Bolt.Controllers
 {
@@ -25,7 +26,7 @@ namespace Bolt.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
-
+        private readonly IRegisterService _service;
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
 
@@ -34,13 +35,15 @@ namespace Bolt.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          IRegisterService service)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _service = service;
         }
 
         [TempData]
@@ -61,7 +64,9 @@ namespace Bolt.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 IsEmailConfirmed = user.EmailConfirmed,
-                StatusMessage = StatusMessage
+                StatusMessage = StatusMessage,
+                LastName = user.LastName,
+                FirstName = user.FirstName
             };
 
             return View(model);
@@ -92,15 +97,7 @@ namespace Bolt.Controllers
                 }
             }
 
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-                }
-            }
+            var userDb = _service.GetAndUpdateUser(model);
 
             StatusMessage = "Your profile has been updated";
             return RedirectToAction(nameof(Index));

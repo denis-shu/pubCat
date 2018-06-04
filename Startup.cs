@@ -30,16 +30,21 @@ namespace Bolt
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+            {
+                opt.Lockout.AllowedForNewUsers = true;
+                opt.Lockout.MaxFailedAccessAttempts = 4;                 
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-          
+
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IMenuItemService, MenuItemService>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IHomeService, HomeService>();
+            services.AddTransient<IRegisterService, RegisterService>();
 
             services.AddMvc();
         }
