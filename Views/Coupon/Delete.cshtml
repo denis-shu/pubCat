@@ -1,0 +1,83 @@
+﻿@model Bolt.Models.Coupon
+@using Bolt.Models
+@{
+    ViewData["Title"] = "Delete Coupon";
+}
+
+<br />
+<h2>Delete Coupon</h2>
+<br />
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div class="row container form-border">
+        <br />
+        <div class="col-12 border">
+            @{
+            var temp64 = Convert.ToBase64String(Model.Picture);
+            var imgSrc = string.Format("data:image/jpg;base64,{0}",temp64);
+
+            }
+            <img src='@imgSrc' height="55px;" width="100%;" />
+        </div>
+        <div class="col-6">
+            <input hidden asp-for="Id" />
+            <fieldset disabled>
+                <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Picture" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="file" id="projectImage" name="files" multiple class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="CouponTYpe" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="CouponTYpe" asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Discount" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Discount" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="MinimumAmout" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="MinimumAmout" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="IsActive" class="custom-label"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="checkbox" asp-for="IsActive" class="form-control" />
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="col-12" style="padding-top:10px;">
+            <input type="submit" value="Delete" asp-route-id="@Model.Id" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-success">Back</a>
+        </div>
+
+    </div>
+</form>

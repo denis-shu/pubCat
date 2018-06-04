@@ -117,7 +117,7 @@ namespace Bolt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(Guid id)
         {
-            MenuItemVm.MenuItem = await _service.GetFullMenuItem(id);
+            //MenuItemVm.MenuItem = await _service.GetFullMenuItem(id);
             MenuItemVm.MenuItem.SubCategoryId = new Guid(Request.Form["SubCategoryId"].ToString());
 
             if (id != MenuItemVm.MenuItem.Id)

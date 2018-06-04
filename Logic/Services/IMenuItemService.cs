@@ -19,7 +19,7 @@ namespace Bolt.Logic.Services
         Task<MenuItem> GetMenuItemByIdAsync(Guid id);
         Task<bool> AddSaveFoto(IFormFileCollection files, string root, MenuItemViewModel model);
         Task<MenuItem> GetFullMenuItem(Guid id);
-        Task<IEnumerable<SubCategory>> GetSubcategory(Guid id);
+        Task<List<SubCategory>> GetSubcategory(Guid id);
         Task<bool> EditAsync(IFormFileCollection files, string root, MenuItemViewModel model);
         Task<bool> DeleteAsync(string root, MenuItem model);
 

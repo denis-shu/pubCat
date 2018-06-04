@@ -16,11 +16,16 @@ namespace Bolt.Models
 
         [Required]
         public double Discount { get; set; }
+        public enum ECouponType
+        {
+            Persent = 0,
+            Dollar = 1
+        }
+
 
         [Required]
         public double MinimumAmout  { get; set; }
 
-        [Required]
         public byte[] Picture { get; set; }
 
         public bool IsActive { get; set; }

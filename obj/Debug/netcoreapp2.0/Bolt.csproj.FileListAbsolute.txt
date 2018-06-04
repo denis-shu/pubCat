@@ -9,3 +9,4 @@ C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcorea
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.dll
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.pdb
 C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+C:\Users\asus\Documents\Visual Studio 2017\Projects\Bolt\Bolt\obj\Debug\netcoreapp2.0\Bolt.csprojAssemblyReference.cache

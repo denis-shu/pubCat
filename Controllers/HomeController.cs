@@ -5,14 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bolt.Models;
+using Bolt.Logic.Services;
 
 namespace Bolt.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IHomeService _service;
+        public HomeController(IHomeService service)
         {
-            return View();
+            _service = service;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var indexVM = _service.GetIndexViewModel();
+
+            return View(indexVM);
         }
 
         public IActionResult About()

@@ -99,7 +99,7 @@ namespace Bolt.Logic.Services
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<IEnumerable<SubCategory>> GetSubcategory(Guid id)
+        public async Task<List<SubCategory>> GetSubcategory(Guid id)
         {
             return await _db.SubCategory
                 .Where(s => s.CategoryId == id)
