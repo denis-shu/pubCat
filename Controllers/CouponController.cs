@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using Bolt.Logic.Services;
 using Bolt.Models;
+using Bolt.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bolt.Controllers
 {
+    [Authorize(Roles = SD.AdminAndUser)]
     public class CouponController : Controller
     {
         private readonly ICouponService _service;

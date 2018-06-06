@@ -12,6 +12,7 @@ using Bolt.Data;
 using Bolt.Models;
 using Bolt.Services;
 using Bolt.Logic.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bolt
 {
@@ -37,6 +38,10 @@ namespace Bolt
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddMvc(opt => {
+                opt.Filters.Add(new RequireHttpsAttribute());
+            });
 
 
             // Add application services.

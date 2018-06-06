@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Data;
 using System.Threading.Tasks;
 using Bolt.Logic.Services;
-using Bolt.Models.Menu;
 using Bolt.Models.ViewModels;
 using Bolt.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bolt.Controllers
 {
+    [Authorize(Roles = SD.AdminAndUser)]
     public class MenuItemsController : Controller
     {
         private readonly IMenuItemService _service;

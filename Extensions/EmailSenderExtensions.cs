@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Bolt.Services;
 
 namespace Bolt.Services
 {
@@ -14,5 +10,13 @@ namespace Bolt.Services
             return emailSender.SendEmailAsync(email, "Confirm your email",
                 $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
         }
+
+        //public static Task SendOrderStatusAsync(this IEmailSender emailSender, string email, string orderNumber, string status)
+        //{
+        //    string subject = "";
+        //    string message = "";
+
+
+        //}
     }
 }

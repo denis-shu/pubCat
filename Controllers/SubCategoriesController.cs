@@ -5,11 +5,14 @@ using Bolt.Data;
 using Bolt.Logic.Services;
 using Bolt.Models;
 using Bolt.Models.SubCategotyViewModel;
+using Bolt.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bolt.Controllers
 {
+    [Authorize(Roles = SD.AdminAndUser)]
     public class SubCategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

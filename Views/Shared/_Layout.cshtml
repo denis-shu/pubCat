@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Bolt.Utility
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -23,7 +25,12 @@
         <a class="navbar-brand" asp-action="Index" asp-controller="Home">Bolt</a>
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
+
+                @if(User.IsInRole(SD.AdminAndUser) || User.IsInRole(SD.CustomerAndUser)){
                 <li class="nav-item"><a class="nav-link" href="#">Order History</a> </li>
+                }
+                @if(User.IsInRole(SD.AdminAndUser)){
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Adminka
@@ -33,7 +40,7 @@
                         <a class="dropdown-item" asp-controller="SubCategories" asp-action="Index">Sub Category</a>
                         <a class="dropdown-item" asp-controller="MenuItems" asp-action="Index">Menu Items</a>
 
-                        
+
                         <a class="dropdown-item" asp-controller="Coupon" asp-action="Index">Coupons</a>
                     </div>
                 </li>
@@ -47,13 +54,17 @@
                         <a class="dropdown-item" href="#">Order Details</a>
                     </div>
                 </li>
-<li style="color:white">
-    <a href="#" class="nav-link"><i class="fas fa-cart-arrow-down"></i>
-&nbsp;(0)
-</a>
-</li>
-            </ul>
+                }
+                @if(User.IsInRole(SD.AdminAndUser)||User.IsInRole(SD.CustomerAndUser)){
 
+                <li style="color:white">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cart-arrow-down"></i>
+                        &nbsp;(0)
+                    </a>
+                </li>
+                }
+            </ul>
         </div>
         <div class="form-inline">
             @await Html.PartialAsync("_loginPartial")

@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Bolt.Models;
 using Bolt.Logic.Services;
+using Bolt.Services;
 
 namespace Bolt.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IHomeService _service;
-        public HomeController(IHomeService service)
+        private readonly IEmailSender _sender;
+
+        public HomeController(IHomeService service, IEmailSender sender)
         {
             _service = service;
+            _sender = sender;
         }
 
         public async Task<IActionResult> Index()
@@ -41,6 +45,13 @@ namespace Bolt.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public async Task<IActionResult> SendEmail()
+        {
+           await _sender.SendEmailAsync("starodub.ilya12@gmail.com", "Test2", "1111test krokus message");
+
+            return Ok();
         }
     }
 }
